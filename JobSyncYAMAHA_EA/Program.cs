@@ -35,22 +35,23 @@ namespace JobSyncYAMAHA_EA
                         _context.MSTPositions.InsertOnSubmit(position);
                     }
 
-                    var deptQuery = _context.MSTDepartments.Where(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t);
-                    if (!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
+                    var deptQuery = _context.MSTDepartments.Where(x => x.NameEn == viewEmp.NAMCENTENG || x.NameTh == viewEmp.NAMCENTHA);
+                    if (!deptQuery.Any(x => x.NameEn == viewEmp.NAMCENTENG || x.NameTh == viewEmp.NAMCENTHA))
                     {
                         var dept = new MSTDepartment();
                         dept.CreatedDate = DateTime.Now;
                         dept.ModifiedDate = DateTime.Now;
                         dept.IsActive = true;
-                        dept.NameEn = viewEmp.department_e;
-                        dept.NameTh = viewEmp.department_t;
+                        dept.NameEn = viewEmp.NAMCENTENG;
+                        dept.NameTh = viewEmp.NAMCENTHA;
                         dept.CreatedBy = "SYSTEM";
                         dept.ModifiedBy = "SYSTEM";
                         dept.CompanyCode = "TYM";
+                        dept.DepartmentCode = !string.IsNullOrEmpty(viewEmp.CODCOMP) ? viewEmp.CODCOMP : null;
                         _context.MSTDepartments.InsertOnSubmit(dept);
                     }
 
-                    var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.division_e || x.NameTh == viewEmp.division_t);
+                    var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t);
                     if (!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
                     {
                         var div = new MSTDivision();
@@ -85,7 +86,7 @@ namespace JobSyncYAMAHA_EA
                     update.Email = mapper.EMAIL;
                     update.PositionId = _context.MSTPositions.FirstOrDefault(x => x.NameEn == mapper.NAMPOS || x.NameTh == mapper.NAMPOS)?.PositionId;
                     update.DepartmentId = _context.MSTDepartments.FirstOrDefault(x => x.NameEn == mapper.NAMCENTENG || x.NameTh == mapper.NAMCENTHA)?.DepartmentId;
-                    update.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.department_t || x.NameTh == mapper.department_e)?.DivisionId;
+                    update.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.department_e || x.NameTh == mapper.department_t)?.DivisionId;
 
                     //update.ReportToEmpCode = _context.MSTEmployees.FirstOrDefault(x => 
                     //x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead))
@@ -109,7 +110,7 @@ namespace JobSyncYAMAHA_EA
                     insertModel.Email = mapper.EMAIL;
                     insertModel.PositionId = _context.MSTPositions.FirstOrDefault(x => x.NameEn == mapper.NAMPOS || x.NameTh == mapper.NAMPOS)?.PositionId;
                     insertModel.DepartmentId = _context.MSTDepartments.FirstOrDefault(x => x.NameEn == mapper.NAMCENTENG || x.NameTh == mapper.NAMCENTHA)?.DepartmentId;
-                    insertModel.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.department_t || x.NameTh == mapper.department_e)?.DivisionId;
+                    insertModel.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.department_e || x.NameTh == mapper.department_t)?.DivisionId;
 
                     //insertModel.ReportToEmpCode = _context.MSTEmployees.FirstOrDefault(x =>
                     //x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead))
