@@ -50,19 +50,19 @@ namespace JobSyncYAMAHA_EA
                         _context.MSTDepartments.InsertOnSubmit(dept);
                     }
 
-                    var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.division_e || x.NameTh == viewEmp.division_t);
-                    if (!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
-                    {
-                        var div = new MSTDivision();
-                        div.CreatedDate = DateTime.Now;
-                        div.ModifiedDate = DateTime.Now;
-                        div.IsActive = true;
-                        div.NameEn = viewEmp.department_e;
-                        div.NameTh = viewEmp.department_t;
-                        div.CreatedBy = "SYSTEM";
-                        div.ModifiedBy = "SYSTEM";
-                        _context.MSTDivisions.InsertOnSubmit(div);
-                    }
+                    //var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.division_e || x.NameTh == viewEmp.division_t);
+                    //if (!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
+                    //{
+                    //    var div = new MSTDivision();
+                    //    div.CreatedDate = DateTime.Now;
+                    //    div.ModifiedDate = DateTime.Now;
+                    //    div.IsActive = true;
+                    //    div.NameEn = viewEmp.department_e;
+                    //    div.NameTh = viewEmp.department_t;
+                    //    div.CreatedBy = "SYSTEM";
+                    //    div.ModifiedBy = "SYSTEM";
+                    //    _context.MSTDivisions.InsertOnSubmit(div);
+                    //}
 
                     _context.SubmitChanges();
                 }
