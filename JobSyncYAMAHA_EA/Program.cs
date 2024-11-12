@@ -27,8 +27,8 @@ namespace JobSyncYAMAHA_EA
                         position.CreatedDate = DateTime.Now;
                         position.ModifiedDate = DateTime.Now;
                         position.IsActive = true;
-                        position.NameEn = viewEmp.NAMPOSE.Replace(Environment.NewLine, "").Trim();
-                        position.NameTh = viewEmp.NAMPOST.Replace(Environment.NewLine, "").Trim();
+                        position.NameEn = (viewEmp.NAMPOSE ?? "").Replace(Environment.NewLine, "").Trim();
+                        position.NameTh = (viewEmp.NAMPOST ?? "").Replace(Environment.NewLine, "").Trim();
                         position.CreatedBy = "SYSTEM";
                         position.ModifiedBy = "SYSTEM";
                         position.CompanyCode = "TYM";
@@ -55,6 +55,7 @@ namespace JobSyncYAMAHA_EA
                     if (!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
                     {
                         var div = new MSTDivision();
+                        div.DivisionId = 0;
                         div.CreatedDate = DateTime.Now;
                         div.ModifiedDate = DateTime.Now;
                         div.IsActive = true;
