@@ -52,7 +52,7 @@ namespace JobSyncYAMAHA_EA
                     }
 
                     var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t);
-                    if (!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
+                    if (!divQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
                     {
                         var div = new MSTDivision();
                         div.DivisionId = 0;
