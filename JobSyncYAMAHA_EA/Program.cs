@@ -26,6 +26,7 @@ namespace JobSyncYAMAHA_EA
                         var position = new MSTPosition();
                         position.CreatedDate = DateTime.Now;
                         position.ModifiedDate = DateTime.Now;
+                        position.AccountId = 1;
                         position.IsActive = true;
                         position.NameEn = (viewEmp.NAMPOSE ?? "").Replace(Environment.NewLine, "").Trim();
                         position.NameTh = (viewEmp.NAMPOST ?? "").Replace(Environment.NewLine, "").Trim();
@@ -39,6 +40,7 @@ namespace JobSyncYAMAHA_EA
                     if (!deptQuery.Any(x => x.NameEn == viewEmp.NAMCENTENG || x.NameTh == viewEmp.NAMCENTTHA))
                     {
                         var dept = new MSTDepartment();
+                        dept.AccountId = 1;
                         dept.CreatedDate = DateTime.Now;
                         dept.ModifiedDate = DateTime.Now;
                         dept.IsActive = true;
@@ -55,6 +57,7 @@ namespace JobSyncYAMAHA_EA
                     if (!divQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
                     {
                         var div = new MSTDivision();
+                        div.AccountId = 1;
                         div.DivisionId = 0;
                         div.CreatedDate = DateTime.Now;
                         div.ModifiedDate = DateTime.Now;
