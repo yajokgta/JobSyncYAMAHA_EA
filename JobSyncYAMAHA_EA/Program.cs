@@ -72,19 +72,31 @@ namespace JobSyncYAMAHA_EA
                     _context.SubmitChanges();
                 }
 
-                var updates = _context.V_EMPLOYEE_TYMs.Where(x => _context.MSTEmployees.Select(s => s.EmployeeCode).Contains(x.CODEMPID)).ToList();
-
-                //var inserts = _context.V_EMPLOYEE_TYMs.Where(x => !_context.MSTEmployees.Select(s => s.EmployeeCode).Contains(x.CODEMPID)).ToList();
+                var updates = _context.V_EMPLOYEE_TYMs.ToList().Select(ss => new
+                {
+                    CODEMPID = !string.IsNullOrEmpty(ss.CODNATNL) && ss.CODNATNL == "01" ? "CN" + ss.CODEMPID : ss.CODEMPID,
+                    ss.CODNATNL,
+                    ss.NAMEMPT,
+                    ss.NAMEMPE,
+                    ss.EMAIL,
+                    ss.NAMPOSE,
+                    ss.NAMCENTENG,
+                    ss.NAMPOST,
+                    ss.department_e,
+                    ss.department_t,
+                    ss.codeHead
+                }).Where(x => _context.MSTEmployees.Select(s => s.EmployeeCode).Contains(x.CODEMPID)).ToList();
 
                 Console.WriteLine($"EMP UPDATE COUNT : {updates.Count()}");
-                //Console.WriteLine($"EMP INSERT COUNT : {inserts.Count()}");
-
-                var empUpdates = _context.MSTEmployees.Where(x => updates.Select(s => s.CODEMPID).Contains(x.EmployeeCode)).ToList();
+                var usersCode = updates.Select(s => s.CODEMPID);
+                var empUpdates = _context.MSTEmployees.Where(x => usersCode.Contains(x.EmployeeCode)).ToList();
+                var empIsActive = _context.MSTEmployees.Where(x => !usersCode.Contains(x.EmployeeCode)).ToList();
 
                 foreach (var update in empUpdates)
                 {
                     var mapper = updates.FirstOrDefault(x => update.EmployeeCode == x.CODEMPID);
-                    update.Username = !string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.CODEMPID : mapper.CODEMPID;
+                    update.Username = mapper.CODEMPID;
+                    update.EmployeeCode = mapper.CODEMPID;
                     update.NameTh = mapper.NAMEMPT;
                     update.NameEn = mapper.NAMEMPE;
                     update.Email = mapper.EMAIL;
@@ -92,10 +104,7 @@ namespace JobSyncYAMAHA_EA
                     update.DepartmentId = _context.MSTDepartments.FirstOrDefault(x => x.NameEn == mapper.NAMCENTENG || x.NameTh == mapper.NAMCENTENG)?.DepartmentId;
                     update.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.department_e || x.NameTh == mapper.department_t)?.DivisionId;
 
-                    //update.ReportToEmpCode = _context.MSTEmployees.FirstOrDefault(x => 
-                    //x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead))
-                    //    ?.EmployeeId.ToString();
-                    update.ReportToEmpCode = _context.MSTEmployees.Where(x => x.EmployeeCode == mapper.codeHead && x.IsActive == true).FirstOrDefault()?.EmployeeId.ToString() ?? null;
+                    update.ReportToEmpCode = _context.MSTEmployees.Where(x => x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead)).FirstOrDefault()?.EmployeeId.ToString() ?? null;
 
                     update.ModifiedBy = "SYSTEM";
                     update.ModifiedDate = DateTime.Now;
@@ -103,37 +112,11 @@ namespace JobSyncYAMAHA_EA
                     _context.SubmitChanges();
                 }
 
-                //foreach (var mapper in inserts)
-                //{
-                //    var insertModel = new MSTEmployee();
-
-                //    insertModel.Username = !string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.CODEMPID : mapper.CODEMPID;
-                //    insertModel.EmployeeCode = mapper.CODEMPID;
-                //    insertModel.NameTh = mapper.NAMEMPT;
-                //    insertModel.NameEn = mapper.NAMEMPE;
-                //    insertModel.Email = mapper.EMAIL;
-                //    insertModel.PositionId = _context.MSTPositions.FirstOrDefault(x => x.NameEn == mapper.NAMPOS || x.NameTh == mapper.NAMPOS)?.PositionId;
-                //    insertModel.DepartmentId = _context.MSTDepartments.FirstOrDefault(x => x.NameEn == mapper.NAMCENTENG || x.NameTh == mapper.NAMCENTHA)?.DepartmentId;
-                //    insertModel.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.department_e || x.NameTh == mapper.department_t)?.DivisionId;
-
-                //    //insertModel.ReportToEmpCode = _context.MSTEmployees.FirstOrDefault(x =>
-                //    //x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead))
-                //    //    ?.EmployeeId.ToString();
-                //    insertModel.ReportToEmpCode = _context.MSTEmployees.Where(x => x.EmployeeCode == mapper.codeHead && x.IsActive == true).FirstOrDefault()?.EmployeeId.ToString() ?? null;
-
-                //    insertModel.IsActive = true;
-                //    insertModel.Lang = "EN";
-                //    insertModel.AccountId = 1;
-                //    insertModel.ADTitle = string.Empty;
-
-                //    insertModel.ModifiedBy = "SYSTEM";
-                //    insertModel.ModifiedDate = DateTime.Now;
-                //    insertModel.CreatedBy = "SYSTEM";
-                //    insertModel.CreatedDate = DateTime.Now;
-                //    _context.MSTEmployees.InsertOnSubmit(insertModel);
-                //    _context.SubmitChanges();
-                //}
-                //tran.Commit();
+                foreach (var update in empIsActive)
+                {
+                    update.IsActive = false;
+                    _context.SubmitChanges();
+                }
             }
 
             catch (Exception ex)
