@@ -12,7 +12,7 @@ namespace JobSyncYAMAHA_EA.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -43,6 +43,17 @@ namespace JobSyncYAMAHA_EA.Properties {
         public string WolfApproveCore_QAR2ConnectionString {
             get {
                 return ((string)(this["WolfApproveCore_QAR2ConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-MTFBHTV\\SQLEXPRESS;Initial Catalog=WolfApproveCore.ypmt-prd;I" +
+            "ntegrated Security=True")]
+        public string WolfApproveCore_ypmt_prdConnectionString {
+            get {
+                return ((string)(this["WolfApproveCore_ypmt_prdConnectionString"]));
             }
         }
     }
