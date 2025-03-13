@@ -81,7 +81,7 @@ namespace JobSyncYAMAHA_EA
                 var viewAllEA = ExcuteStoreQueryListAsync<SP_GetEmployEa>(store);
                 if (viewAllEA.Count() > 0)
                 {
-                    Log("ConnectStore Success: " + viewAllEA);
+                    Log("ConnectStore Success: " + viewAllEA.Count());
                     string UpEmployee = "UPDATE [dbo].[MSTEmployee] SET IsActive = 0 where EmployeeId <> 1";
                     using (SqlConnection connection = new SqlConnection(_Connection))
                     {
@@ -93,53 +93,61 @@ namespace JobSyncYAMAHA_EA
                     }
                     foreach (var viewEmp in viewAllEA)
                     {
-                        var positionQuery = _context.MSTPositions.Where(x => x.NameEn == viewEmp.NAMPOS || x.NameTh == viewEmp.NAMPOS);
-                        if (!positionQuery.Any())
+                        if (!string.IsNullOrEmpty(viewEmp.NAMPOS))
                         {
-                            var position = new MSTPosition();
-                            position.CreatedDate = DateTime.Now;
-                            position.ModifiedDate = DateTime.Now;
-                            position.IsActive = true;
-                            position.NameEn = viewEmp.NAMPOS.Replace(Environment.NewLine, "").Trim();
-                            position.NameTh = viewEmp.NAMPOS.Replace(Environment.NewLine, "").Trim();
-                            position.CreatedBy = "SYSTEM";
-                            position.ModifiedBy = "SYSTEM";
-                            position.CompanyCode = "TYM";
-                            position.AccountId = 1;
-                            _context.MSTPositions.InsertOnSubmit(position);
+                            var positionQuery = _context.MSTPositions.Where(x => x.NameTh == viewEmp.NAMPOS).ToList();
+                            if (positionQuery.Count() == 0)
+                            {
+                                var position = new MSTPosition();
+                                position.CreatedDate = DateTime.Now;
+                                position.ModifiedDate = DateTime.Now;
+                                position.IsActive = true;
+                                position.NameEn = viewEmp.NAMPOS.Replace(Environment.NewLine, "").Trim();
+                                position.NameTh = viewEmp.NAMPOS.Replace(Environment.NewLine, "").Trim();
+                                position.CreatedBy = "SYSTEM";
+                                position.ModifiedBy = "SYSTEM";
+                                position.CompanyCode = "TYM";
+                                position.AccountId = 1;
+                                _context.MSTPositions.InsertOnSubmit(position);
+                            }
                         }
 
-                        var deptQuery = _context.MSTDepartments.Where(x => x.NameEn == viewEmp.NAMCENTENG || x.NameTh == viewEmp.NAMCENTHA);
-                        if (!deptQuery.Any())
+                        if (!string.IsNullOrEmpty(viewEmp.NAMCENTENG))
                         {
-                            var dept = new MSTDepartment();
-                            dept.CreatedDate = DateTime.Now;
-                            dept.ModifiedDate = DateTime.Now;
-                            dept.IsActive = true;
-                            dept.NameEn = viewEmp.NAMCENTENG;
-                            dept.NameTh = viewEmp.NAMCENTHA;
-                            dept.CreatedBy = "SYSTEM";
-                            dept.ModifiedBy = "SYSTEM";
-                            dept.CompanyCode = "TYM";
-                            dept.AccountId = 1;
-                            dept.DepartmentCode = !string.IsNullOrEmpty(viewEmp.CODCOMP) ? viewEmp.CODCOMP : null;
-                            _context.MSTDepartments.InsertOnSubmit(dept);
+                            var deptQuery = _context.MSTDepartments.Where(x => x.NameEn == viewEmp.NAMCENTENG).ToList();
+                            if (deptQuery.Count() == 0)
+                            {
+                                var dept = new MSTDepartment();
+                                dept.CreatedDate = DateTime.Now;
+                                dept.ModifiedDate = DateTime.Now;
+                                dept.IsActive = true;
+                                dept.NameEn = viewEmp.NAMCENTENG;
+                                dept.NameTh = viewEmp.NAMCENTHA;
+                                dept.CreatedBy = "SYSTEM";
+                                dept.ModifiedBy = "SYSTEM";
+                                dept.CompanyCode = "TYM";
+                                dept.AccountId = 1;
+                                dept.DepartmentCode = !string.IsNullOrEmpty(viewEmp.CODCOMP) ? viewEmp.CODCOMP : null;
+                                _context.MSTDepartments.InsertOnSubmit(dept);
+                            }
                         }
-
-                        var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t);
-                        if (!deptQuery.Any())
+                        if (!string.IsNullOrEmpty(viewEmp.department_e))
                         {
-                            var div = new MSTDivision();
-                            div.CreatedDate = DateTime.Now;
-                            div.ModifiedDate = DateTime.Now;
-                            div.IsActive = true;
-                            div.NameEn = viewEmp.department_e;
-                            div.NameTh = viewEmp.department_t;
-                            div.CreatedBy = "SYSTEM";
-                            div.ModifiedBy = "SYSTEM";
-                            _context.MSTDivisions.InsertOnSubmit(div);
+                            var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.department_e).ToList();
+                            if (divQuery.Count() == 0)
+                            {
+                                var div = new MSTDivision();
+                                div.CreatedDate = DateTime.Now;
+                                div.ModifiedDate = DateTime.Now;
+                                div.IsActive = true;
+                                div.NameEn = viewEmp.department_e;
+                                div.NameTh = viewEmp.department_t;
+                                div.CreatedBy = "SYSTEM";
+                                div.ModifiedBy = "SYSTEM";
+                                _context.MSTDivisions.InsertOnSubmit(div);
+                            }
+                            _context.SubmitChanges();
                         }
-                        _context.SubmitChanges();
                     }
 
                     var updates = viewAllEA.Where(x => _context.MSTEmployees.Select(s => s.EmployeeCode).Contains(x.CODEMPID)).ToList();
