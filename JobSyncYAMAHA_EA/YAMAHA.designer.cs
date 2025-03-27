@@ -136,19 +136,19 @@ namespace JobSyncYAMAHA_EA
 			}
 		}
 		
-		public System.Data.Linq.Table<V_EMPLOYEE_TYM> V_EMPLOYEE_TYMs
-		{
-			get
-			{
-				return this.GetTable<V_EMPLOYEE_TYM>();
-			}
-		}
-		
 		public System.Data.Linq.Table<MSTDivision> MSTDivisions
 		{
 			get
 			{
 				return this.GetTable<MSTDivision>();
+			}
+		}
+		
+		public System.Data.Linq.Table<V_EMPLOYEE_TYM> V_EMPLOYEE_TYMs
+		{
+			get
+			{
+				return this.GetTable<V_EMPLOYEE_TYM>();
 			}
 		}
 	}
@@ -2815,411 +2815,6 @@ namespace JobSyncYAMAHA_EA
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.V_EMPLOYEE_TYM")]
-	public partial class V_EMPLOYEE_TYM
-	{
-		
-		private string _CODEMPID;
-		
-		private string _NAMEMPT;
-		
-		private string _NAMEMPE;
-		
-		private string _CODPOS;
-		
-		private string _NAMPOS;
-		
-		private string _NAMCENTE;
-		
-		private string _NAMCENTHA;
-		
-		private string _NAMCENTENG;
-		
-		private string _CODCOMP;
-		
-		private string _department_t;
-		
-		private string _department_e;
-		
-		private string _division_t;
-		
-		private string _division_e;
-		
-		private string _TYPEMP;
-		
-		private string _STAEMP;
-		
-		private string _EMAIL;
-		
-		private string _codeHead;
-		
-		private string _NameHeadT;
-		
-		private string _NameHeadE;
-		
-		private string _CODCOMPR;
-		
-		private string _CODPOSPRE;
-		
-		private string _CODNATNL;
-		
-		public V_EMPLOYEE_TYM()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODEMPID", DbType="VarChar(MAX)")]
-		public string CODEMPID
-		{
-			get
-			{
-				return this._CODEMPID;
-			}
-			set
-			{
-				if ((this._CODEMPID != value))
-				{
-					this._CODEMPID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMEMPT", DbType="VarChar(MAX)")]
-		public string NAMEMPT
-		{
-			get
-			{
-				return this._NAMEMPT;
-			}
-			set
-			{
-				if ((this._NAMEMPT != value))
-				{
-					this._NAMEMPT = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMEMPE", DbType="VarChar(MAX)")]
-		public string NAMEMPE
-		{
-			get
-			{
-				return this._NAMEMPE;
-			}
-			set
-			{
-				if ((this._NAMEMPE != value))
-				{
-					this._NAMEMPE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODPOS", DbType="VarChar(MAX)")]
-		public string CODPOS
-		{
-			get
-			{
-				return this._CODPOS;
-			}
-			set
-			{
-				if ((this._CODPOS != value))
-				{
-					this._CODPOS = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMPOS", DbType="VarChar(MAX)")]
-		public string NAMPOS
-		{
-			get
-			{
-				return this._NAMPOS;
-			}
-			set
-			{
-				if ((this._NAMPOS != value))
-				{
-					this._NAMPOS = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMCENTE", DbType="VarChar(MAX)")]
-		public string NAMCENTE
-		{
-			get
-			{
-				return this._NAMCENTE;
-			}
-			set
-			{
-				if ((this._NAMCENTE != value))
-				{
-					this._NAMCENTE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMCENTHA", DbType="VarChar(MAX)")]
-		public string NAMCENTHA
-		{
-			get
-			{
-				return this._NAMCENTHA;
-			}
-			set
-			{
-				if ((this._NAMCENTHA != value))
-				{
-					this._NAMCENTHA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMCENTENG", DbType="VarChar(MAX)")]
-		public string NAMCENTENG
-		{
-			get
-			{
-				return this._NAMCENTENG;
-			}
-			set
-			{
-				if ((this._NAMCENTENG != value))
-				{
-					this._NAMCENTENG = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODCOMP", DbType="VarChar(MAX)")]
-		public string CODCOMP
-		{
-			get
-			{
-				return this._CODCOMP;
-			}
-			set
-			{
-				if ((this._CODCOMP != value))
-				{
-					this._CODCOMP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_department_t", DbType="VarChar(MAX)")]
-		public string department_t
-		{
-			get
-			{
-				return this._department_t;
-			}
-			set
-			{
-				if ((this._department_t != value))
-				{
-					this._department_t = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_department_e", DbType="VarChar(MAX)")]
-		public string department_e
-		{
-			get
-			{
-				return this._department_e;
-			}
-			set
-			{
-				if ((this._department_e != value))
-				{
-					this._department_e = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_division_t", DbType="VarChar(MAX)")]
-		public string division_t
-		{
-			get
-			{
-				return this._division_t;
-			}
-			set
-			{
-				if ((this._division_t != value))
-				{
-					this._division_t = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_division_e", DbType="VarChar(MAX)")]
-		public string division_e
-		{
-			get
-			{
-				return this._division_e;
-			}
-			set
-			{
-				if ((this._division_e != value))
-				{
-					this._division_e = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TYPEMP", DbType="VarChar(MAX)")]
-		public string TYPEMP
-		{
-			get
-			{
-				return this._TYPEMP;
-			}
-			set
-			{
-				if ((this._TYPEMP != value))
-				{
-					this._TYPEMP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_STAEMP", DbType="VarChar(MAX)")]
-		public string STAEMP
-		{
-			get
-			{
-				return this._STAEMP;
-			}
-			set
-			{
-				if ((this._STAEMP != value))
-				{
-					this._STAEMP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EMAIL", DbType="VarChar(MAX)")]
-		public string EMAIL
-		{
-			get
-			{
-				return this._EMAIL;
-			}
-			set
-			{
-				if ((this._EMAIL != value))
-				{
-					this._EMAIL = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codeHead", DbType="VarChar(MAX)")]
-		public string codeHead
-		{
-			get
-			{
-				return this._codeHead;
-			}
-			set
-			{
-				if ((this._codeHead != value))
-				{
-					this._codeHead = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameHeadT", DbType="VarChar(MAX)")]
-		public string NameHeadT
-		{
-			get
-			{
-				return this._NameHeadT;
-			}
-			set
-			{
-				if ((this._NameHeadT != value))
-				{
-					this._NameHeadT = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameHeadE", DbType="VarChar(MAX)")]
-		public string NameHeadE
-		{
-			get
-			{
-				return this._NameHeadE;
-			}
-			set
-			{
-				if ((this._NameHeadE != value))
-				{
-					this._NameHeadE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODCOMPR", DbType="VarChar(MAX)")]
-		public string CODCOMPR
-		{
-			get
-			{
-				return this._CODCOMPR;
-			}
-			set
-			{
-				if ((this._CODCOMPR != value))
-				{
-					this._CODCOMPR = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODPOSPRE", DbType="VarChar(MAX)")]
-		public string CODPOSPRE
-		{
-			get
-			{
-				return this._CODPOSPRE;
-			}
-			set
-			{
-				if ((this._CODPOSPRE != value))
-				{
-					this._CODPOSPRE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODNATNL", DbType="VarChar(MAX)")]
-		public string CODNATNL
-		{
-			get
-			{
-				return this._CODNATNL;
-			}
-			set
-			{
-				if ((this._CODNATNL != value))
-				{
-					this._CODNATNL = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MSTDivision")]
 	public partial class MSTDivision : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3494,6 +3089,411 @@ namespace JobSyncYAMAHA_EA
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.V_EMPLOYEE_TYM")]
+	public partial class V_EMPLOYEE_TYM
+	{
+		
+		private string _CODEMPID;
+		
+		private string _NAMEMPT;
+		
+		private string _NAMEMPE;
+		
+		private string _CODPOS;
+		
+		private string _NAMPOST;
+		
+		private string _NAMPOSE;
+		
+		private string _NAMCENTTHA;
+		
+		private string _NAMCENTENG;
+		
+		private string _CODCOMP;
+		
+		private string _department_t;
+		
+		private string _department_e;
+		
+		private string _division_t;
+		
+		private string _division_e;
+		
+		private string _TYPEMP;
+		
+		private string _STAEMP;
+		
+		private string _EMAIL;
+		
+		private string _codeHead;
+		
+		private string _NameHeadE;
+		
+		private string _NameHeadT;
+		
+		private string _CODCOMPR;
+		
+		private string _CODPOSRE;
+		
+		private string _CODNATNL;
+		
+		public V_EMPLOYEE_TYM()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODEMPID", DbType="NVarChar(MAX)")]
+		public string CODEMPID
+		{
+			get
+			{
+				return this._CODEMPID;
+			}
+			set
+			{
+				if ((this._CODEMPID != value))
+				{
+					this._CODEMPID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMEMPT", DbType="NVarChar(MAX)")]
+		public string NAMEMPT
+		{
+			get
+			{
+				return this._NAMEMPT;
+			}
+			set
+			{
+				if ((this._NAMEMPT != value))
+				{
+					this._NAMEMPT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMEMPE", DbType="NVarChar(MAX)")]
+		public string NAMEMPE
+		{
+			get
+			{
+				return this._NAMEMPE;
+			}
+			set
+			{
+				if ((this._NAMEMPE != value))
+				{
+					this._NAMEMPE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODPOS", DbType="NVarChar(MAX)")]
+		public string CODPOS
+		{
+			get
+			{
+				return this._CODPOS;
+			}
+			set
+			{
+				if ((this._CODPOS != value))
+				{
+					this._CODPOS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMPOST", DbType="NVarChar(MAX)")]
+		public string NAMPOST
+		{
+			get
+			{
+				return this._NAMPOST;
+			}
+			set
+			{
+				if ((this._NAMPOST != value))
+				{
+					this._NAMPOST = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMPOSE", DbType="NVarChar(MAX)")]
+		public string NAMPOSE
+		{
+			get
+			{
+				return this._NAMPOSE;
+			}
+			set
+			{
+				if ((this._NAMPOSE != value))
+				{
+					this._NAMPOSE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMCENTTHA", DbType="NVarChar(MAX)")]
+		public string NAMCENTTHA
+		{
+			get
+			{
+				return this._NAMCENTTHA;
+			}
+			set
+			{
+				if ((this._NAMCENTTHA != value))
+				{
+					this._NAMCENTTHA = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NAMCENTENG", DbType="NVarChar(MAX)")]
+		public string NAMCENTENG
+		{
+			get
+			{
+				return this._NAMCENTENG;
+			}
+			set
+			{
+				if ((this._NAMCENTENG != value))
+				{
+					this._NAMCENTENG = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODCOMP", DbType="NVarChar(MAX)")]
+		public string CODCOMP
+		{
+			get
+			{
+				return this._CODCOMP;
+			}
+			set
+			{
+				if ((this._CODCOMP != value))
+				{
+					this._CODCOMP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_department_t", DbType="NVarChar(MAX)")]
+		public string department_t
+		{
+			get
+			{
+				return this._department_t;
+			}
+			set
+			{
+				if ((this._department_t != value))
+				{
+					this._department_t = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_department_e", DbType="NVarChar(MAX)")]
+		public string department_e
+		{
+			get
+			{
+				return this._department_e;
+			}
+			set
+			{
+				if ((this._department_e != value))
+				{
+					this._department_e = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_division_t", DbType="NVarChar(MAX)")]
+		public string division_t
+		{
+			get
+			{
+				return this._division_t;
+			}
+			set
+			{
+				if ((this._division_t != value))
+				{
+					this._division_t = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_division_e", DbType="NVarChar(MAX)")]
+		public string division_e
+		{
+			get
+			{
+				return this._division_e;
+			}
+			set
+			{
+				if ((this._division_e != value))
+				{
+					this._division_e = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TYPEMP", DbType="NVarChar(MAX)")]
+		public string TYPEMP
+		{
+			get
+			{
+				return this._TYPEMP;
+			}
+			set
+			{
+				if ((this._TYPEMP != value))
+				{
+					this._TYPEMP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_STAEMP", DbType="NVarChar(MAX)")]
+		public string STAEMP
+		{
+			get
+			{
+				return this._STAEMP;
+			}
+			set
+			{
+				if ((this._STAEMP != value))
+				{
+					this._STAEMP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EMAIL", DbType="NVarChar(MAX)")]
+		public string EMAIL
+		{
+			get
+			{
+				return this._EMAIL;
+			}
+			set
+			{
+				if ((this._EMAIL != value))
+				{
+					this._EMAIL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codeHead", DbType="NVarChar(MAX)")]
+		public string codeHead
+		{
+			get
+			{
+				return this._codeHead;
+			}
+			set
+			{
+				if ((this._codeHead != value))
+				{
+					this._codeHead = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameHeadE", DbType="NVarChar(MAX)")]
+		public string NameHeadE
+		{
+			get
+			{
+				return this._NameHeadE;
+			}
+			set
+			{
+				if ((this._NameHeadE != value))
+				{
+					this._NameHeadE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameHeadT", DbType="NVarChar(MAX)")]
+		public string NameHeadT
+		{
+			get
+			{
+				return this._NameHeadT;
+			}
+			set
+			{
+				if ((this._NameHeadT != value))
+				{
+					this._NameHeadT = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODCOMPR", DbType="NVarChar(MAX)")]
+		public string CODCOMPR
+		{
+			get
+			{
+				return this._CODCOMPR;
+			}
+			set
+			{
+				if ((this._CODCOMPR != value))
+				{
+					this._CODCOMPR = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODPOSRE", DbType="NVarChar(MAX)")]
+		public string CODPOSRE
+		{
+			get
+			{
+				return this._CODPOSRE;
+			}
+			set
+			{
+				if ((this._CODPOSRE != value))
+				{
+					this._CODPOSRE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CODNATNL", DbType="NVarChar(MAX)")]
+		public string CODNATNL
+		{
+			get
+			{
+				return this._CODNATNL;
+			}
+			set
+			{
+				if ((this._CODNATNL != value))
+				{
+					this._CODNATNL = value;
+				}
 			}
 		}
 	}

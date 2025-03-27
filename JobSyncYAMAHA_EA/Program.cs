@@ -18,78 +18,93 @@ namespace JobSyncYAMAHA_EA
                 var viewAll = _context.V_EMPLOYEE_TYMs.ToList();
 
 
-                foreach(var viewEmp in viewAll)
+                foreach (var viewEmp in viewAll)
                 {
-                    var positionQuery = _context.MSTPositions.Where(x => x.NameEn == viewEmp.NAMPOS || x.NameTh == viewEmp.NAMPOS);
-                    if (!positionQuery.Any(x => x.NameEn == viewEmp.NAMPOS || x.NameTh == viewEmp.NAMPOS))
+                    var positionQuery = _context.MSTPositions.Where(x => x.NameEn == viewEmp.NAMPOSE || x.NameTh == viewEmp.NAMPOST);
+                    if (!positionQuery.Any(x => x.NameEn == viewEmp.NAMPOSE || x.NameTh == viewEmp.NAMPOST))
                     {
                         var position = new MSTPosition();
                         position.CreatedDate = DateTime.Now;
                         position.ModifiedDate = DateTime.Now;
+                        position.AccountId = 1;
                         position.IsActive = true;
-                        position.NameEn = viewEmp.NAMPOS.Replace(Environment.NewLine, "").Trim();
-                        position.NameTh = viewEmp.NAMPOS.Replace(Environment.NewLine, "").Trim();
+                        position.NameEn = (viewEmp.NAMPOSE ?? "").Replace(Environment.NewLine, "").Trim();
+                        position.NameTh = (viewEmp.NAMPOST ?? "").Replace(Environment.NewLine, "").Trim();
                         position.CreatedBy = "SYSTEM";
                         position.ModifiedBy = "SYSTEM";
                         position.CompanyCode = "TYM";
                         _context.MSTPositions.InsertOnSubmit(position);
                     }
 
-                    var deptQuery = _context.MSTDepartments.Where(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t);
-                    if(!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
+                    var deptQuery = _context.MSTDepartments.Where(x => x.NameEn == viewEmp.NAMCENTENG || x.NameTh == viewEmp.NAMCENTTHA);
+                    if (!deptQuery.Any(x => x.NameEn == viewEmp.NAMCENTENG || x.NameTh == viewEmp.NAMCENTTHA))
                     {
                         var dept = new MSTDepartment();
+                        dept.AccountId = 1;
                         dept.CreatedDate = DateTime.Now;
                         dept.ModifiedDate = DateTime.Now;
                         dept.IsActive = true;
-                        dept.NameEn = viewEmp.department_e;
-                        dept.NameTh = viewEmp.department_t;
+                        dept.NameEn = viewEmp.NAMCENTENG;
+                        dept.NameTh = viewEmp.NAMCENTTHA;
                         dept.CreatedBy = "SYSTEM";
                         dept.ModifiedBy = "SYSTEM";
                         dept.CompanyCode = "TYM";
+                        dept.DepartmentCode = !string.IsNullOrEmpty(viewEmp.CODCOMP) ? viewEmp.CODCOMP : null;
                         _context.MSTDepartments.InsertOnSubmit(dept);
                     }
 
-                    //var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.division_e || x.NameTh == viewEmp.division_t);
-                    //if (!deptQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
-                    //{
-                    //    var div = new MSTDivision();
-                    //    div.CreatedDate = DateTime.Now;
-                    //    div.ModifiedDate = DateTime.Now;
-                    //    div.IsActive = true;
-                    //    div.NameEn = viewEmp.department_e;
-                    //    div.NameTh = viewEmp.department_t;
-                    //    div.CreatedBy = "SYSTEM";
-                    //    div.ModifiedBy = "SYSTEM";
-                    //    _context.MSTDivisions.InsertOnSubmit(div);
-                    //}
+                    var divQuery = _context.MSTDivisions.Where(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t);
+                    if (!divQuery.Any(x => x.NameEn == viewEmp.department_e || x.NameTh == viewEmp.department_t))
+                    {
+                        var div = new MSTDivision();
+                        div.AccountId = 1;
+                        div.DivisionId = 0;
+                        div.CreatedDate = DateTime.Now;
+                        div.ModifiedDate = DateTime.Now;
+                        div.IsActive = true;
+                        div.NameEn = viewEmp.department_e;
+                        div.NameTh = viewEmp.department_t;
+                        div.CreatedBy = "SYSTEM";
+                        div.ModifiedBy = "SYSTEM";
+                        _context.MSTDivisions.InsertOnSubmit(div);
+                    }
 
                     _context.SubmitChanges();
                 }
 
-                var updates = _context.V_EMPLOYEE_TYMs.Where(x => _context.MSTEmployees.Select(s => s.EmployeeCode).Contains(x.CODEMPID)).ToList();
-
-                var inserts = _context.V_EMPLOYEE_TYMs.Where(x => !_context.MSTEmployees.Select(s => s.EmployeeCode).Contains(x.CODEMPID)).ToList();
+                var updates = _context.V_EMPLOYEE_TYMs.ToList().Select(ss => new
+                {
+                    CODEMPID = !string.IsNullOrEmpty(ss.CODNATNL) && ss.CODNATNL == "01" ? "CN" + ss.CODEMPID : ss.CODEMPID,
+                    ss.CODNATNL,
+                    ss.NAMEMPT,
+                    ss.NAMEMPE,
+                    ss.EMAIL,
+                    ss.NAMPOSE,
+                    ss.NAMCENTENG,
+                    ss.NAMPOST,
+                    ss.department_e,
+                    ss.department_t,
+                    ss.codeHead
+                }).Where(x => _context.MSTEmployees.Select(s => s.EmployeeCode).Contains(x.CODEMPID)).ToList();
 
                 Console.WriteLine($"EMP UPDATE COUNT : {updates.Count()}");
-                Console.WriteLine($"EMP INSERT COUNT : {inserts.Count()}");
-
-                var empUpdates = _context.MSTEmployees.Where(x => updates.Select(s => s.CODEMPID).Contains(x.EmployeeCode)).ToList();
+                var usersCode = updates.Select(s => s.CODEMPID);
+                var empUpdates = _context.MSTEmployees.Where(x => usersCode.Contains(x.EmployeeCode)).ToList();
+                var empIsActive = _context.MSTEmployees.Where(x => !usersCode.Contains(x.EmployeeCode)).ToList();
 
                 foreach (var update in empUpdates)
                 {
                     var mapper = updates.FirstOrDefault(x => update.EmployeeCode == x.CODEMPID);
-                    update.Username = !string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.CODEMPID : mapper.CODEMPID;
+                    update.Username = mapper.CODEMPID;
+                    update.EmployeeCode = mapper.CODEMPID;
                     update.NameTh = mapper.NAMEMPT;
                     update.NameEn = mapper.NAMEMPE;
                     update.Email = mapper.EMAIL;
-                    update.PositionId = _context.MSTPositions.FirstOrDefault(x => x.NameEn == mapper.NAMPOS || x.NameTh == mapper.NAMPOS)?.PositionId;
-                    update.DepartmentId = _context.MSTDepartments.FirstOrDefault(x => x.NameEn == mapper.department_e)?.DepartmentId;
-                    update.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.division_e || x.NameTh == mapper.division_t)?.DivisionId;
+                    update.PositionId = _context.MSTPositions.FirstOrDefault(x => x.NameEn == mapper.NAMPOSE || x.NameTh == mapper.NAMPOST)?.PositionId;
+                    update.DepartmentId = _context.MSTDepartments.FirstOrDefault(x => x.NameEn == mapper.NAMCENTENG || x.NameTh == mapper.NAMCENTENG)?.DepartmentId;
+                    update.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.department_e || x.NameTh == mapper.department_t)?.DivisionId;
 
-                    update.ReportToEmpCode = _context.MSTEmployees.FirstOrDefault(x => 
-                    x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead))
-                        ?.EmployeeId.ToString();
+                    update.ReportToEmpCode = _context.MSTEmployees.Where(x => x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead)).FirstOrDefault()?.EmployeeId.ToString() ?? null;
 
                     update.ModifiedBy = "SYSTEM";
                     update.ModifiedDate = DateTime.Now;
@@ -97,36 +112,11 @@ namespace JobSyncYAMAHA_EA
                     _context.SubmitChanges();
                 }
 
-                foreach (var mapper in inserts)
+                foreach (var update in empIsActive)
                 {
-                    var insertModel = new MSTEmployee();
-
-                    insertModel.Username = !string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.CODEMPID : mapper.CODEMPID;
-                    insertModel.EmployeeCode = mapper.CODEMPID;
-                    insertModel.NameTh = mapper.NAMEMPT;
-                    insertModel.NameEn = mapper.NAMEMPE;
-                    insertModel.Email = mapper.EMAIL;
-                    insertModel.PositionId = _context.MSTPositions.FirstOrDefault(x => x.NameEn == mapper.NAMPOS || x.NameTh == mapper.NAMPOS)?.PositionId;
-                    insertModel.DepartmentId = _context.MSTDepartments.FirstOrDefault(x => x.NameEn == mapper.department_e)?.DepartmentId;
-                    insertModel.DivisionId = _context.MSTDivisions.FirstOrDefault(x => x.NameEn == mapper.division_e || x.NameTh == mapper.division_t)?.DivisionId;
-
-                    insertModel.ReportToEmpCode = _context.MSTEmployees.FirstOrDefault(x =>
-                    x.EmployeeCode == (!string.IsNullOrEmpty(mapper.CODNATNL) && mapper.CODNATNL == "01" ? "CN" + mapper.codeHead : mapper.codeHead))
-                        ?.EmployeeId.ToString();
-
-                    insertModel.IsActive = true;
-                    insertModel.Lang = "EN";
-                    insertModel.AccountId = 1;
-                    insertModel.ADTitle = string.Empty;
-
-                    insertModel.ModifiedBy = "SYSTEM";
-                    insertModel.ModifiedDate = DateTime.Now;
-                    insertModel.CreatedBy = "SYSTEM";
-                    insertModel.CreatedDate = DateTime.Now;
-                    _context.MSTEmployees.InsertOnSubmit(insertModel);
+                    update.IsActive = false;
                     _context.SubmitChanges();
                 }
-                //tran.Commit();
             }
 
             catch (Exception ex)
